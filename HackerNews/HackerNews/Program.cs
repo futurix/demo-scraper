@@ -3,9 +3,9 @@ using System;
 
 namespace HackerNews
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static int Main(string[] args)
         {
             Console.WriteLine("Web scraper demo");
             Console.WriteLine();
@@ -34,12 +34,15 @@ namespace HackerNews
             if (requestedPosts < 0)
             {
                 Console.WriteLine("Invalid arguments!");
-                return;
+                Console.WriteLine();
+                Console.WriteLine("Correct usage:");
+                Console.WriteLine("HackerNews --posts 42");
+                return 1;
             }
             else if (requestedPosts == 0)
             {
                 Console.WriteLine("Invalid number of posts!");
-                return;
+                return 2;
             }
 
             // launch the scraper
@@ -51,6 +54,9 @@ namespace HackerNews
             {
                 Console.WriteLine(JsonConvert.SerializeObject(scr.Results, Formatting.Indented));
             }
+
+            // success
+            return 0;
         }
     }
 }

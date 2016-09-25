@@ -3,3 +3,5 @@ HackerNews/HackerNews/obj/*
 HackerNews/packages/*/
 *.csproj.user
 HackerNews/.vs/*
+HackerNews/HackerNews.Tests/bin/*
+HackerNews/HackerNews.Tests/obj/*
