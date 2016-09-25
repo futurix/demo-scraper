@@ -7,7 +7,7 @@ namespace HackerNews
     /// <summary>
     /// High level scraper class - makes multiple web requests under the hood, when needed.
     /// </summary>
-    class Scraper
+    public class Scraper
     {
         /// <summary>
         /// Base URI of a target website.

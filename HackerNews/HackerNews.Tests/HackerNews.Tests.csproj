@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="CommandLineInputTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScraperRequestTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HackerNews\HackerNews.csproj">

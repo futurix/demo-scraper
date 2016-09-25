@@ -8,7 +8,7 @@ namespace HackerNews
     /// <summary>
     /// Scraper request class representing a single page HTTP/HTTPS request.
     /// </summary>
-    class ScraperRequest
+    public class ScraperRequest
     {
         /// <summary>
         /// List of parsed posts retrieved in this request.
@@ -59,84 +59,87 @@ namespace HackerNews
                 // ... fetch the posts and ...
                 HtmlNodeCollection mainNodes = doc.DocumentNode.SelectNodes("/html/body/center/table/tr/td/table//tr[@class='athing']");
 
-                // ... loop through them
-                foreach (HtmlNode mainNode in mainNodes)
+                if (mainNodes != null)
                 {
-                    int? rank = null;
-                    string title = null;
-                    string url = null;
-                    int? score = null;
-                    string user = null;
-                    int? comments = null;
-
-                    // get handles of various bits of post metadata
-                    HtmlNode rankNode = mainNode.SelectSingleNode("td/span[@class='rank']");
-                    HtmlNode titleNode = mainNode.SelectSingleNode("td[@class='title']/a[@class='storylink']");
-                    HtmlNode followupNode = mainNode.NextSibling;
-                    HtmlNode pointsNode = followupNode?.SelectSingleNode("td[@class='subtext']/span[@class='score']");
-                    HtmlNode userNode = followupNode?.SelectSingleNode("td[@class='subtext']/a[@class='hnuser']");
-                    HtmlNode commentsNode = followupNode?.SelectSingleNode("td[@class='subtext']/a[last()]");
-
-                    // post rank
-                    if (rankNode != null)
+                    // ... loop through them
+                    foreach (HtmlNode mainNode in mainNodes)
                     {
-                        rank = ExtractFirstNumber(rankNode.InnerText);
-                    }
+                        int? rank = null;
+                        string title = null;
+                        string url = null;
+                        int? score = null;
+                        string user = null;
+                        int? comments = null;
 
-                    // title and URI
-                    if (titleNode != null)
-                    {
-                        title = titleNode.InnerText;
-                        url = titleNode.Attributes["href"]?.Value;
+                        // get handles of various bits of post metadata
+                        HtmlNode rankNode = mainNode.SelectSingleNode("td/span[@class='rank']");
+                        HtmlNode titleNode = mainNode.SelectSingleNode("td[@class='title']/a[@class='storylink']");
+                        HtmlNode followupNode = mainNode.NextSibling;
+                        HtmlNode pointsNode = followupNode?.SelectSingleNode("td[@class='subtext']/span[@class='score']");
+                        HtmlNode userNode = followupNode?.SelectSingleNode("td[@class='subtext']/a[@class='hnuser']");
+                        HtmlNode commentsNode = followupNode?.SelectSingleNode("td[@class='subtext']/a[last()]");
 
-                        // fix the internal Hacker News links
-                        if (!String.IsNullOrWhiteSpace(url) && url.StartsWith("item"))
+                        // post rank
+                        if (rankNode != null)
                         {
-                            url = targetUrl + url;
+                            rank = ExtractFirstNumber(rankNode.InnerText);
                         }
-                    }
 
-                    // points / upvotes
-                    if (pointsNode != null)
-                    {
-                        score = ExtractFirstNumber(pointsNode.InnerText);
-                    }
-
-                    // username
-                    if (userNode != null)
-                    {
-                        user = userNode.InnerText;
-                    }
-
-                    // comments (if any)
-                    if (commentsNode != null)
-                    {
-                        comments = ExtractFirstNumber(commentsNode.InnerText);
-                    }
-
-                    // if no comments found - set to zero
-                    if (!comments.HasValue)
-                    {
-                        comments = 0;
-                    }
-
-                    // validate the basics
-                    if (rank.HasValue && !String.IsNullOrWhiteSpace(title) && !String.IsNullOrWhiteSpace(url) && score.HasValue && !String.IsNullOrWhiteSpace(user) && comments.HasValue)
-                    {
-                        Post newPost = new Post()
+                        // title and URI
+                        if (titleNode != null)
                         {
-                            Title = title.Trim(),
-                            URI = url,
-                            User = user.Trim(),
-                            Points = score.Value,
-                            Comments = comments.Value,
-                            Rank = rank.Value
-                        };
+                            title = titleNode.InnerText;
+                            url = titleNode.Attributes["href"]?.Value;
 
-                        // validate and save the post
-                        if (Post.Validate(ref newPost))
+                            // fix the internal Hacker News links
+                            if (!String.IsNullOrWhiteSpace(url) && url.StartsWith("item"))
+                            {
+                                url = targetUrl + url;
+                            }
+                        }
+
+                        // points / upvotes
+                        if (pointsNode != null)
                         {
-                            Results.Add(newPost);
+                            score = ExtractFirstNumber(pointsNode.InnerText);
+                        }
+
+                        // username
+                        if (userNode != null)
+                        {
+                            user = userNode.InnerText;
+                        }
+
+                        // comments (if any)
+                        if (commentsNode != null)
+                        {
+                            comments = ExtractFirstNumber(commentsNode.InnerText);
+                        }
+
+                        // if no comments found - set to zero
+                        if (!comments.HasValue)
+                        {
+                            comments = 0;
+                        }
+
+                        // validate the basics
+                        if (rank.HasValue && !String.IsNullOrWhiteSpace(title) && !String.IsNullOrWhiteSpace(url) && score.HasValue && !String.IsNullOrWhiteSpace(user) && comments.HasValue)
+                        {
+                            Post newPost = new Post()
+                            {
+                                Title = title.Trim(),
+                                URI = url,
+                                User = user.Trim(),
+                                Points = score.Value,
+                                Comments = comments.Value,
+                                Rank = rank.Value
+                            };
+
+                            // validate and save the post
+                            if (Post.Validate(ref newPost))
+                            {
+                                Results.Add(newPost);
+                            }
                         }
                     }
                 }
@@ -173,7 +176,7 @@ namespace HackerNews
     /// <summary>
     /// Status of the scraper request.
     /// </summary>
-    enum ScraperStatus
+    public enum ScraperStatus
     {
         /// <summary>
         /// Posts fetched successfully.

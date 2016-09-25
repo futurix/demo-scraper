@@ -6,7 +6,7 @@ namespace HackerNews
     /// <summary>
     /// Structure that represents a single post on Hacker News.
     /// </summary>
-    struct Post
+    public struct Post
     {
         [JsonProperty("title")]
         public string Title { get; set; }
