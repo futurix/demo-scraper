@@ -1,0 +1,5 @@
+HackerNews/HackerNews/bin/*
+HackerNews/HackerNews/obj/*
+HackerNews/packages/*/
+*.csproj.user
+HackerNews/.vs/*
