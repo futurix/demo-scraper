@@ -5,3 +5,4 @@ HackerNews/packages/*/
 HackerNews/.vs/*
 HackerNews/HackerNews.Tests/bin/*
 HackerNews/HackerNews.Tests/obj/*
+.DS_Store
