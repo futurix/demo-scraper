@@ -18,6 +18,7 @@ Build requirements:
 For IDE-based build, open `HackerNews.sln` in Visual Studio. To run unit tests use _Test Explorer_ window.
 
 For command-line build:
+
 1. Install standalone `NuGet.exe` anywhere in `%PATH%`
 2. Open `Developer Command Prompt`
 3. Navigate to the folder with `HackerNews.sln`
